@@ -3,7 +3,7 @@
 
 import { MongoClient } from 'mongodb'
 
-const uri = process.env.URI
+const uri = process.env.MONGODB_URI
 const options = { 
   useNewUrlParser: true,
 }
@@ -11,7 +11,7 @@ const options = {
 let client
 let clientPromise
 
-if (!process.env.URI) {
+if (!process.env.MONGODB_URI) {
   throw new Error('Add Mongo URI to .env.local')
 }
 
