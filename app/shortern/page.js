@@ -19,7 +19,8 @@ const SHORTERN = () => {
     const generate = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
+        if(url === "" || shorturl === ""){return alert("URL is required")}
+        else{
         const raw = JSON.stringify({
             "url": url,
             "shorturl": shorturl
@@ -47,7 +48,7 @@ const SHORTERN = () => {
 
             })
             .catch((error) => console.error(error));
-
+        }
     }
 
     const deletecommand = (deleter)=>{
@@ -99,7 +100,8 @@ const SHORTERN = () => {
                     {generated.map((item)=>{
                         return <li className='flex justify-between items-center' key={item.shorturl}>
                             <Link target='_blank' href={`${process.env.NEXT_PUBLIC_HOST}/${item.shorturl}`}>{`${process.env.NEXT_PUBLIC_HOST}/${item.shorturl}`}</Link>
-                            <button onClick={()=>deletecommand(item.shorturl)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><img width={20} src="delete.svg" alt="" /></button>
+                            <button onClick={(e)=>deletecommand(item.shorturl)
+                            } type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><img width={20} src="delete.svg" alt="" /></button>
                             </li>
                     })}
                 </ul>
