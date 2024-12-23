@@ -2,8 +2,9 @@
 import Image from "next/image";
 import localFont from "next/font/local";
 import Link from "next/link";
-import { useState } from "react";
-import iziToast from "izitoast";
+import { useState ,useEffect} from "react";
+import dynamic from 'next/dynamic';
+
 
 const poppins = localFont({
   src: "./fonts/Poppins-ExtraBold.ttf",
@@ -13,6 +14,15 @@ const poppins = localFont({
 
 export default function Home() {
   const [comment , setcomment] = useState()
+  const [iziToast, setizitoast] = useState(null)
+  useEffect(() => {
+    const loadizitoast = async()=>{
+      const izitoastmodule = (await import("izitoast")).default
+      setizitoast(izitoastmodule)
+    }
+    loadizitoast()
+  }, [])
+  
   return (
    <main>
     <section className="grid bg-purple-100 px-4 h-[60vh] grid-cols-2">
