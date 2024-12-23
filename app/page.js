@@ -3,6 +3,7 @@ import Image from "next/image";
 import localFont from "next/font/local";
 import Link from "next/link";
 import { useState } from "react";
+import iziToast from "izitoast";
 
 const poppins = localFont({
   src: "./fonts/Poppins-ExtraBold.ttf",
@@ -38,7 +39,7 @@ export default function Home() {
            <textarea onChange={(e)=>{setcomment(e.target.value)}} value={comment} id="comment" rows="4" className="w-full px-0 text-sm focus:outline-none text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write a comment..." required ></textarea>
        </div>
        <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-           <button onClick={async()=>{const myHeaders = new Headers();
+           <button onClick={async()=>{if(comment != ""){const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 const raw = JSON.stringify({
@@ -56,7 +57,18 @@ fetch("http://localhost:3000/api/savecomment", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.error(error))
-  setcomment("")}} className="inline-flex items-center mx-auto py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+  setcomment("")
+  iziToast.success({
+    title: 'Success',
+    message: "Your comment has been posted",
+})}
+else{
+  iziToast.error({
+    title: 'Error',
+    message: "Please enter a comment",
+  })
+}
+  }} className="inline-flex items-center mx-auto py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                Post comment
            </button>
            

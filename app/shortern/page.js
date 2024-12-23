@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
+import iziToast from 'izitoast';
 
 const SHORTERN = () => {
     const [url, setUrl] = useState('')
@@ -9,6 +10,7 @@ const SHORTERN = () => {
     useEffect(() => {
         
         hello()
+        
     }, [])
     const hello = async()=>{
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/generate`)
@@ -19,7 +21,10 @@ const SHORTERN = () => {
     const generate = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        if(url === "" || shorturl === ""){return alert("URL is required")}
+        if(url === "" || shorturl === ""){return iziToast.error({
+                    title: 'Error',
+                    message: "URL is required!",
+                })}
         else{
         const raw = JSON.stringify({
             "url": url,
@@ -39,11 +44,18 @@ const SHORTERN = () => {
             .then((result) => {
                 console.log(result)
                 hello()
-                alert(result.message)
-
-                if (!result.error) {
+                if(result.error){
+                iziToast.error({
+                    title: 'Error',
+                    message: result.message,
+                });}
+               else {
                     setUrl("");
                     setShortUrl("");
+                    iziToast.success({
+                        title: 'Success',
+                        message: result.message,
+                    });
                 }
 
             })
@@ -68,7 +80,19 @@ const SHORTERN = () => {
         
         fetch(`${process.env.NEXT_PUBLIC_HOST}/api/generate`, requestOptions)
           .then((response) => response.json())
-          .then((result) => {alert(result.message)
+          .then((result) => {
+            if(result.error){
+                iziToast.error({
+                    title: 'Error',
+                    message: result.message,
+                });}
+                else{
+                    iziToast.success({
+                        title: 'Success',
+                        message: result.message,
+                    });
+                }
+                
             hello()
           })
           .catch((error) => console.error(error));
