@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 
-// Dynamically import iziToast
-const iziToast = dynamic(() => import('izitoast'), { ssr: false });
 
 const SHORTERN = () => {
     const [url, setUrl] = useState('');
@@ -96,20 +93,21 @@ const SHORTERN = () => {
     };
 
     return (
-        <div className='max-w-lg mx-auto my-20 rounded-xl bg-purple-100 p-8'>
-            <h1 className='font-bold text-2xl my-4'>Generate your short URLs</h1>
+        <main className=''>
+        <div style={{boxShadow:"0px 0px 1000px 100px #e91e634f"}} className='max-w-lg m-10 mx-auto my-20 rounded-xl bg-purple-100 p-8 max-[548px]:p-4 max-[548px]:mx-4'>
+            <h1 className='font-bold max-[430px]:text-xl text-[#8d21bf] text-2xl my-4'>Generate your short URLs</h1>
             <div className='flex flex-col gap-3'>
                 <input
                     type="text"
                     value={url}
-                    className='p-2.5 rounded-lg focus:outline-purple-500'
+                    className='p-2.5 rounded-lg placeholder:text-[#8d21bfa2] focus:outline-purple-500'
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Enter your URL here"
                 />
                 <input
                     type="text"
                     value={shorturl}
-                    className='p-2.5 rounded-lg focus:outline-purple-500'
+                    className='p-2.5 rounded-lg placeholder:text-[#8d21bfa3] focus:outline-purple-500'
                     onChange={(e) => setShortUrl(e.target.value)}
                     placeholder="Preferred short URL text"
                 />
@@ -143,6 +141,25 @@ const SHORTERN = () => {
                 </div>
             )}
         </div>
+        <footer className="flex  max-[430px]:px-4 justify-between absolute bottom-0 w-full items-center bg-black p-5 px-10">
+      <h2 className="font-bold  max-[430px]:text-xl text-2xl text-white">Linkify</h2>
+      <p className="text-white  max-[430px]:text-xs text-sm font-medium">© 2023 Flowbite™. All Rights Reserved.</p>
+      <ul className="flex flex-wrap max-[800px]:hidden items-center mt-3 text-sm font-medium text-white dark:text-gray-400 sm:mt-0">
+        <li>
+            <a target="_blank" href={`${process.env.NEXT_PUBLIC_HOST}/about`} className="hover:underline me-4 md:me-6">About</a>
+        </li>
+        <li>
+            <a target="_blank" href={`${process.env.NEXT_PUBLIC_HOST}/shortern`}  className="hover:underline me-4 md:me-6">Shortern</a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.github.com/WebCreatorishere" className="hover:underline me-4 md:me-6">Github</a>
+        </li>
+        <li>
+            <a target="_blank" href={`${process.env.NEXT_PUBLIC_HOST}/shprtern`}  className="hover:underline">Contact Us</a>
+        </li>
+    </ul>
+    </footer>
+        </main>
     );
 };
 
